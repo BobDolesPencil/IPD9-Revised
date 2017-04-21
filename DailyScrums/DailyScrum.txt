@@ -1,0 +1,66 @@
+Sebastien Scullion - Matthew Stinis
+
+Scrum WEEKEND - 4/21/2017
+          Seb TODO
+           - LogIn correction
+           - Playlist
+           - Upload, Browse button function
+           - Change upload from one file to one or more files
+
+          Matt TODO
+           - WPF code-behind tutorials
+
+Scrum 6 - 4/21/2017
+          Seb TODO in 24 hrs
+           - LogIn correction
+           - Playlist
+           - Upload, Browse button function
+           - Change upload from one file to one or more files
+
+          Matt TODO in 24 hrs
+           - Continue working on main and converter
+           - Move all of previous design into new version of window
+
+Scrum 5 - 4/20/2017
+          Seb TODO in 24 hrs
+           - LogIn
+           - Playlist
+
+          Matt TODO in 24 hrs
+           - Continue working on main and converter
+           - learn layout properly (DockPanel)
+
+Scrum 4 - 4/18/2017
+          Seb TODO in 24 hrs
+           - Create working media playback
+
+          Matt TODO in 24 hrs
+           - learn Ribbon
+
+Scrum 3 - 4/10/2017
+	Sebastien TODO in 24 hrs
+		- implemnt all tables in database
+		- implemnt behind code for login custom window ( wait for mat push )
+		
+	Matthew TODO in 24 hrs
+		- implent main window
+		- style main window
+
+Scrum 2 - 3/11/2017
+	no meeting
+	
+
+
+Scrum 1 - 4/10/2017
+
+First Scrum:
+1. Create preliminary user stories
+
+Will do in next 24h:
+1. Research on different parts of application
+2. How feasible is it to include audio file conversion
+3. Create all user stories
+
+Where we need help is:
+1. File conversion: Best use plugin or create from scratch
+
