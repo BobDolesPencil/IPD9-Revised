@@ -36,7 +36,8 @@ namespace MyMediaPlayer
             string msg = "Logged in as: " + UserLogIn;
             this.Close();
             MessageBox.Show(msg);
-            Title = "MMP " + msg;
+            
+            
             
         }
     }
