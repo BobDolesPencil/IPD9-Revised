@@ -4,15 +4,23 @@
 winexe
 C#
 .cs
+<<<<<<< HEAD
 C:\Users\ipd\Documents\IPD9-Revised\SandBox\obj\Debug\
+=======
+C:\Users\Sebastien\Documents\IP9Revised\SandBox\obj\Debug\
+>>>>>>> 324e18bfd7d81d964ec22b09747690f1eb086c27
 SandBox
 none
 false
 DEBUG;TRACE
+<<<<<<< HEAD
 C:\Users\ipd\Documents\IPD9-Revised\SandBox\App.xaml
+=======
+C:\Users\Sebastien\Documents\IP9Revised\SandBox\App.xaml
+>>>>>>> 324e18bfd7d81d964ec22b09747690f1eb086c27
 11151548125
 
-9209539592
+9-1902896516
 12-114506869
 MainWindow.xaml;
 
