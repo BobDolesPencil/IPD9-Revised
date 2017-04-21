@@ -11,3 +11,16 @@ C:\Users\ipd\Documents\IPD9\420-PQ5-AB VISUAL BASIC .NET AND C# .NET WINDOWS DEV
 C:\Users\ipd\Documents\IPD9\420-PQ5-AB VISUAL BASIC .NET AND C# .NET WINDOWS DEVELOPMENT\Matthew\SandBox\obj\Debug\SandBox.csproj.GenerateResource.Cache
 C:\Users\ipd\Documents\IPD9\420-PQ5-AB VISUAL BASIC .NET AND C# .NET WINDOWS DEVELOPMENT\Matthew\SandBox\obj\Debug\SandBox.exe
 C:\Users\ipd\Documents\IPD9\420-PQ5-AB VISUAL BASIC .NET AND C# .NET WINDOWS DEVELOPMENT\Matthew\SandBox\obj\Debug\SandBox.pdb
+C:\Users\Sebastien\Documents\IP9Revised\SandBox\bin\Debug\SandBox.exe.config
+C:\Users\Sebastien\Documents\IP9Revised\SandBox\obj\Debug\SandBox.exe
+C:\Users\Sebastien\Documents\IP9Revised\SandBox\obj\Debug\SandBox.pdb
+C:\Users\Sebastien\Documents\IP9Revised\SandBox\bin\Debug\SandBox.exe
+C:\Users\Sebastien\Documents\IP9Revised\SandBox\bin\Debug\SandBox.pdb
+C:\Users\Sebastien\Documents\IP9Revised\SandBox\obj\Debug\SandBox.csprojResolveAssemblyReference.cache
+C:\Users\Sebastien\Documents\IP9Revised\SandBox\obj\Debug\MainWindow.baml
+C:\Users\Sebastien\Documents\IP9Revised\SandBox\obj\Debug\MainWindow.g.cs
+C:\Users\Sebastien\Documents\IP9Revised\SandBox\obj\Debug\App.g.cs
+C:\Users\Sebastien\Documents\IP9Revised\SandBox\obj\Debug\SandBox_MarkupCompile.cache
+C:\Users\Sebastien\Documents\IP9Revised\SandBox\obj\Debug\SandBox.g.resources
+C:\Users\Sebastien\Documents\IP9Revised\SandBox\obj\Debug\SandBox.Properties.Resources.resources
+C:\Users\Sebastien\Documents\IP9Revised\SandBox\obj\Debug\SandBox.csproj.GenerateResource.Cache

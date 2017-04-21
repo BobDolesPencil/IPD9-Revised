@@ -37,6 +37,7 @@ namespace MyMediaPlayer
             this.Close();
             MessageBox.Show(msg);
             Title = "MMP " + msg;
+            
         }
     }
 }

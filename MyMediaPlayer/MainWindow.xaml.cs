@@ -30,14 +30,16 @@ namespace MyMediaPlayer
         private bool mediaPlayerIsPlaying = false;
         private bool userIsDraggingSlider = false;
         LogIn log = new LogIn();
-        //public string UserLogIn = "";
+        public string LoggedIn;
         public MainWindow()
         {
             InitializeComponent();
+            log.UserLogIn = "";
             DispatcherTimer timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += timer_Tick;
             timer.Start();
+
         }
         private void timer_Tick(object sender, EventArgs e)
         {
@@ -134,25 +136,40 @@ namespace MyMediaPlayer
 
             byte[] bytes = File.ReadAllBytes(filename);
 
-
-            using (var context = new MockOEntities())
+            if (LoggedIn != "")
             {
 
-
-                //UserProfile user = new UserProfile()
-                var upload = new MediaFile
+                using (var context = new MockOEntities())
                 {
 
-                    userId = "bob.v@shoes.socks",
-                    sourceMedia = bytes,
-                    mediaType = "mp4"
 
-                };
+                    //UserProfile user = new UserProfile()
+                    var upload = new MediaFile
+                    {
 
 
-                context.MediaFiles.Add(upload);
-                context.SaveChanges();
-                this.Close();
+                        userId = log.UserLogIn,
+                        sourceMedia = bytes,
+                        mediaType = "mp4"
+
+
+
+
+                    };
+
+
+                    context.MediaFiles.Add(upload);
+                    context.SaveChanges();
+
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please Log in");
+                LogIn pleaseLog = new LogIn();
+                pleaseLog.ShowDialog();
+               // LoggedIn = log.tbLogIn.Text;
+
             }
         }
 
@@ -180,7 +197,13 @@ namespace MyMediaPlayer
            
         }
 
-        
-
+        private void isLoadLibrary(object sender, RoutedEventArgs e)
+        {
+            using (var context = new MockOEntities())
+            {
+                var LoadLibrary = context.MediaFiles.ToList();
+            }
+                
+        }
     }
 }

@@ -76,6 +76,7 @@
     <Compile Include="database_firewall_rules.cs">
       <DependentUpon>MediaModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="LoadLibrary.cs" />
     <Compile Include="LogIn.xaml.cs">
       <DependentUpon>LogIn.xaml</DependentUpon>
     </Compile>
