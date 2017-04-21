@@ -76,7 +76,7 @@
     <Compile Include="database_firewall_rules.cs">
       <DependentUpon>MediaModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="LoadLibrary.cs" />
+    <Compile Include="LogCheck.cs" />
     <Compile Include="LogIn.xaml.cs">
       <DependentUpon>LogIn.xaml</DependentUpon>
     </Compile>
@@ -88,6 +88,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MediaModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="UploadSelection.cs" />
     <Compile Include="UserProfile.cs">
       <DependentUpon>MediaModel.tt</DependentUpon>
     </Compile>
