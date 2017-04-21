@@ -30,7 +30,7 @@ namespace MyMediaPlayer
         private bool mediaPlayerIsPlaying = false;
         private bool userIsDraggingSlider = false;
         LogIn log = new LogIn();
-        public string LoggedIn;
+        public string LoggedIn = "";
         public MainWindow()
         {
             InitializeComponent();
