@@ -11,3 +11,6 @@ C:\Users\ipd\Documents\IPD9\420-PQ5-AB VISUAL BASIC .NET AND C# .NET WINDOWS DEV
 C:\Users\ipd\Documents\IPD9\420-PQ5-AB VISUAL BASIC .NET AND C# .NET WINDOWS DEVELOPMENT\Matthew\SandBox\obj\Debug\SandBox.csproj.GenerateResource.Cache
 C:\Users\ipd\Documents\IPD9\420-PQ5-AB VISUAL BASIC .NET AND C# .NET WINDOWS DEVELOPMENT\Matthew\SandBox\obj\Debug\SandBox.exe
 C:\Users\ipd\Documents\IPD9\420-PQ5-AB VISUAL BASIC .NET AND C# .NET WINDOWS DEVELOPMENT\Matthew\SandBox\obj\Debug\SandBox.pdb
+C:\Users\ipd\Documents\IPD9-Revised\SandBox\bin\Debug\SandBox.exe.config
+C:\Users\ipd\Documents\IPD9-Revised\SandBox\obj\Debug\SandBox.exe
+C:\Users\ipd\Documents\IPD9-Revised\SandBox\obj\Debug\SandBox.pdb
