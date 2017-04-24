@@ -44,6 +44,7 @@ namespace MyMediaPlayer
             timer.Start();
 
         }
+
         private void timer_Tick(object sender, EventArgs e)
         {
             if ((mePlayer.Source != null) && (mePlayer.NaturalDuration.HasTimeSpan) && (!userIsDraggingSlider))
@@ -213,6 +214,7 @@ namespace MyMediaPlayer
             }
 
         }
+<<<<<<< HEAD
         //----------------------------- TRYING MULTI UPLOAD -------------------------------------------------------------------------------
 
         private void btnUpload_Click(object sender, RoutedEventArgs e)
@@ -298,15 +300,8 @@ namespace MyMediaPlayer
         }
 
 //--------------------------- -------------------------------------------------------
+=======
+>>>>>>> b60fd9044881db94fb250df35167a433fed7f36f
     }
 }
-
-
-
-
-
-
-    
-
-      
     
