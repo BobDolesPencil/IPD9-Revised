@@ -26,7 +26,7 @@ namespace MyMediaPlayer
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     /// 
-    
+
 
     public partial class MainWindow : Window
     {
@@ -34,7 +34,7 @@ namespace MyMediaPlayer
         private bool userIsDraggingSlider = false;
         LogIn log = new LogIn();
         public static LogCheck checklog = new LogCheck(false);
-        
+
         public MainWindow()
         {
             InitializeComponent();
@@ -137,21 +137,21 @@ namespace MyMediaPlayer
             open.Filter = "Media files (*.mp3;*.mpg;*.mpeg)|*.mp3;*.mpg;*.mpeg|All files (*.*)|*.*";
 
             if (open.ShowDialog() == true)
-                
+
                 tbFileName.Text = open.FileName;
-                string filename = tbFileName.Text.ToString();
+            string filename = tbFileName.Text.ToString();
 
-                byte[] bytes = File.ReadAllBytes(filename);
+            byte[] bytes = File.ReadAllBytes(filename);
 
-           // if (LoggedIn != "")
-                if (checklog.Value == true)
+            // if (LoggedIn != "")
+            if (checklog.Value == true)
+            {
+
+                using (var context = new MockOEntities())
                 {
 
-                    using (var context = new MockOEntities())
+                    var upload = new MediaFile
                     {
-
-                        var upload = new MediaFile
-                        {
 
 
                         userId = log.UserLogIn,
@@ -161,7 +161,7 @@ namespace MyMediaPlayer
 
 
 
-                        };
+                    };
 
 
                     context.MediaFiles.Add(upload);
@@ -169,14 +169,14 @@ namespace MyMediaPlayer
                     MessageBox.Show("File Uploaded");
 
                 }
-                }
-                else
-                {
-                    MessageBox.Show("Please Log in");
-                
-                    log.ShowDialog();
-                    checklog.Value = true;
-                
+            }
+            else
+            {
+                MessageBox.Show("Please Log in");
+
+                log.ShowDialog();
+                checklog.Value = true;
+
 
             }
         }
@@ -184,25 +184,25 @@ namespace MyMediaPlayer
 
 
 
-            
+
         //}
 
         private void btnBrowseMedia_Click(object sender, RoutedEventArgs e)
         {
-            
+
             OpenFileDialog open = new OpenFileDialog();
             if (open.ShowDialog() == true)
                 tbFileName.Text = open.FileName;
 
-           
+
 
         }
 
         private void LogIn_Click(object sender, RoutedEventArgs e)
         {
-            
+
             log.ShowDialog();
-           
+
         }
 
         private void isLoadLibrary(object sender, RoutedEventArgs e)
@@ -211,78 +211,85 @@ namespace MyMediaPlayer
             {
                 var LoadLibrary = context.MediaFiles.ToList();
             }
-                
-        }
-//----------------------------- TRYING MULTI UPLOAD -------------------------------------------------------------------------------
-
-        private void btnUpload_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog open = new OpenFileDialog();
-            open.Multiselect = true;
-            open.Filter = "Media files (*.mp3;*.mpg;*.mpeg)|*.mp3;*.mpg;*.mpeg|All files (*.*)|*.*";
-
-            List<UploadSelection> uploadList = new List<UploadSelection>();/// create class for list... check profiler
-
-            if (open.ShowDialog() == true)
-
-                tbFileName.Text = open.FileName;
-            string filename = tbFileName.Text.ToString();
-
-            byte[] bytes = File.ReadAllBytes(filename);
-
-
-            if (checklog.Value == true)
-            {
-                    using (var context = new MockOEntities())
-                    {
-                    if (open.ShowDialog() == true){
-                    
-                        try
-                        {
-                        
-                        
-                        
-                            foreach (var entityToInsert in uploadList)
-                            {
-                                var upload = new MediaFile
-                                {
-                                    userId = log.UserLogIn,
-                                    sourceMedia = bytes,
-                                    mediaType = "mp4"
-                                };
-
-                                context.MediaFiles.Add(upload);
-                                context.SaveChanges();
-                            
-                            }
-                         MessageBox.Show("File(s) Uploaded");
-                        }
-                        catch(Exception ex)
-                        {
-                            MessageBox.Show("error");
-                        }
-                     
-
-                        
-                }
-                else
-                {
-                MessageBox.Show("Please Log in");
-                log.ShowDialog();
-                checklog.Value = true;
-                }
-                    
-
-
 
         }
+        //----------------------------- TRYING MULTI UPLOAD -------------------------------------------------------------------------------
+
+        //private void btnUpload_Click(object sender, RoutedEventArgs e)
+        //{
+        //    OpenFileDialog open = new OpenFileDialog();
+        //    open.Multiselect = true;
+        //    open.Filter = "Media files (*.mp3;*.mpg;*.mpeg)|*.mp3;*.mpg;*.mpeg|All files (*.*)|*.*";
+
+        //    List<UploadSelection> uploadList = new List<UploadSelection>();/// create class for list... check profiler
+
+        //    if (open.ShowDialog() == true)
+
+        //        tbFileName.Text = open.FileName;
+        //    string filename = tbFileName.Text.ToString();
+
+        //    byte[] bytes = File.ReadAllBytes(filename);
+
+
+        //    if (checklog.Value == true)
+        //    {
+        //        using (var context = new MockOEntities())
+        //        {
+        //            if (open.ShowDialog() == true)
+        //            {
+
+        //                try
+        //                {
+
+
+
+        //                    foreach (var entityToInsert in uploadList)
+        //                    {
+        //                        var upload = new MediaFile
+        //                        {
+        //                            userId = log.UserLogIn,
+        //                            sourceMedia = bytes,
+        //                            mediaType = "mp4"
+        //                        };
+
+        //                        context.MediaFiles.Add(upload);
+        //                        context.SaveChanges();
+
+        //                    }
+        //                    MessageBox.Show("File(s) Uploaded");
+        //                }
+        //                catch (Exception ex)
+        //                {
+        //                    MessageBox.Show("error"+ex);
+        //                }
+
+
+
+        //            }
+        //            else
+        //            {
+        //                MessageBox.Show("Please Log in");
+        //                log.ShowDialog();
+        //                checklog.Value = true;
+        //            }
 
 
 
 
+        //        }
+        //    }
+        //}
 
-//---------------------------
+//--------------------------- -------------------------------------------------------
     }
+}
 
-        }
+
+
+
+
+
+    
+
+      
     
