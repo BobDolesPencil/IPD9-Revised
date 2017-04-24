@@ -214,7 +214,7 @@ namespace MyMediaPlayer
             }
 
         }
-<<<<<<< HEAD
+
         //----------------------------- TRYING MULTI UPLOAD -------------------------------------------------------------------------------
 
         private void btnUpload_Click(object sender, RoutedEventArgs e)
@@ -300,8 +300,7 @@ namespace MyMediaPlayer
         }
 
 //--------------------------- -------------------------------------------------------
-=======
->>>>>>> b60fd9044881db94fb250df35167a433fed7f36f
+
     }
 }
     
