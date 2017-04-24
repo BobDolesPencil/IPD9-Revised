@@ -6,12 +6,12 @@ Scrum 7 - 4/24/2017
 Seb
   
 Will do in next 24h:
-1. 
-2. 
-3. 
+1. LogIn correction
+2. Playlist
+3. Upload, Browse button function
 
-Where we need help is:
-1. File conversion: Best use plugin or create from scratchs
+Where I need help is:
+1. -
 
 
 Matt
@@ -21,7 +21,7 @@ Will do in next 24h:
 2. Follow along and contribute to code-behind
 3. 
 
-Where we need help is:
+Where I need help is:
 1. code-behind theory
 
 Scrum WEEKEND - 4/21/2017
