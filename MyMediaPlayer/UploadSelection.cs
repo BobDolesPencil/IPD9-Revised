@@ -9,5 +9,8 @@ namespace MyMediaPlayer
     class UploadSelection
     {
         public byte[] newfile { get; set; }
+        public string mediatitle { get; set; }
+        public string mediatype { get; set; }
+        public string userId { get; set; }
     }
 }

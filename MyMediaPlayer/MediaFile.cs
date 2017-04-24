@@ -18,6 +18,7 @@ namespace MyMediaPlayer
         public byte[] sourceMedia { get; set; }
         public string mediaType { get; set; }
         public string userId { get; set; }
+        public string title { get; set; }
     
         public virtual UserProfile UserProfile { get; set; }
     }
