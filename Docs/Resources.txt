@@ -1,0 +1,12 @@
+Info on audio plugins:
+http://stackoverflow.com/questions/5096834/audio-conversion-using-c-net
+
+Third party component NAudio:
+http://naudio.codeplex.com/
+https://github.com/naudio/NAudio
+
+View/edit ID3 data for media files:
+http://stackoverflow.com/questions/68283/view-edit-id3-data-for-mp3-files
+
+Video Tutorials: 
+Load and play Waves with NAudio https://www.youtube.com/watch?v=6XvWRzWzgNI

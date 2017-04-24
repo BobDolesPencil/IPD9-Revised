@@ -1,0 +1,24 @@
+﻿<Window x:Class="mockup2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <Menu HorizontalAlignment="Left" Height="19" VerticalAlignment="Top" Width="517">
+            <MenuItem Header="File"/>
+            <MenuItem Header="Edit"/>
+            <MenuItem Header="View"/>
+            <MenuItem Header="Playback"/>
+            <MenuItem Header="Library"/>
+            <MenuItem Header="Help"/>
+        </Menu>
+        <StatusBar HorizontalAlignment="Left" Height="20" Margin="0,300,0,0" VerticalAlignment="Top" Width="517"/>
+        <ListBox HorizontalAlignment="Left" Height="183" Margin="39,66,0,0" VerticalAlignment="Top" Width="143"/>
+        <ListBox HorizontalAlignment="Left" Height="183" Margin="334,66,0,0" VerticalAlignment="Top" Width="143"/>
+        <Button Content="Convert" HorizontalAlignment="Left" Margin="224,147,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Content="Delete" HorizontalAlignment="Left" Margin="224,209,0,0" VerticalAlignment="Top" Width="75"/>
+        <Label Content="Conversion queue:" HorizontalAlignment="Left" Margin="39,35,0,0" VerticalAlignment="Top" Width="109" Height="26"/>
+        <Label Content="Converted:" HorizontalAlignment="Left" Margin="334,35,0,0" VerticalAlignment="Top"/>
+        <Button Content="Add" HorizontalAlignment="Left" Margin="224,86,0,0" VerticalAlignment="Top" Width="75"/>
+
+    </Grid>
+</Window>

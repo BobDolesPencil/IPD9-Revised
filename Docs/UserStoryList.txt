@@ -1,0 +1,11 @@
+1. User will be able to playback music from media files
+2. User will be able to upload media files to database
+3. User will be able to access media files from database
+4. User will be able to edit metadata of media files
+5. User will be able to create playlists
+6. User will be able to select default player
+7. User will be able to convert media files into different formats
+8. User will be able to change application skins
+9. User will be able to read media from optical drive
+10. User will be able to log in
+11. User will be able to create user profile
