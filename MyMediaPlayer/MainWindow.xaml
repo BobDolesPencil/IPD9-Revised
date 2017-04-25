@@ -42,7 +42,7 @@
             <Image Source="images\stop.png" />
         </Button>
         <Button Grid.Column="4" Grid.Row="2" HorizontalAlignment="Center" MinWidth="50" Margin="3" />
-        <Button Grid.Column="5" Grid.Row="2" HorizontalAlignment="Center" MinWidth="50" Margin="3" Content="Send"  />
+        <Button Grid.Column="5" Grid.Row="2" HorizontalAlignment="Center" MinWidth="50" Margin="3" Content="Library" Click="Library_Click"  />
 
         <TabControl Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="7" TabStripPlacement="Left">
             <TabItem Header="Player" Name="Player">
@@ -81,19 +81,21 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Library" x:Name="tabLibrary">
-                <ListView x:Name="lstvLibrary" Loaded="isLoadLibrary" >
+                
+                <!--<ListView x:Name="lstvLibrary" Loaded="isLoadLibrary" >
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Title" Width="185"/>
-                            <GridViewColumn Header="Artist" Width="140"/>
-                            <GridViewColumn Header="Album" Width="160"/>
-                            <GridViewColumn Header="Duration" Width="80"/>
-                            <GridViewColumn Header="Year" Width="80"/>
+                            <GridViewColumn Header="User Id" Width="185"/>
+                            <GridViewColumn Header="Title" Width="140"/>
+                            --><!--<GridViewColumn Header="Album" Width="160"/>
+                            <GridViewColumn Header="Duration" Width="80"/>--><!--
+                            <GridViewColumn Header="Type" Width="80"/>
                         </GridView>
                     </ListView.View>
-                </ListView>
+                </ListView>-->
             </TabItem>
             <TabItem Header="Playlist" Name="Playlist">
+                
                 <!--<ListView>
                     <ListView.View>
                         <GridView>
@@ -163,6 +165,7 @@
 
                 </Grid>
             </TabItem>
+            
         </TabControl>
         <Menu Grid.ColumnSpan="7" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="{Binding ElementName=GridMain, Path=ActualWidth}">
             <MenuItem Header="_User">

@@ -34,6 +34,8 @@ namespace MyMediaPlayer
         private bool userIsDraggingSlider = false;
         LogIn log = new LogIn();
         public static LogCheck checklog = new LogCheck(false);
+        MockODataSet dataset = new MockODataSet();
+        
 
         public MainWindow()
         {
@@ -299,7 +301,15 @@ namespace MyMediaPlayer
             }
         }
 
-//--------------------------- -------------------------------------------------------
+        
+
+        private void Library_Click(object sender, RoutedEventArgs e)
+        {
+            Library libshow = new Library();
+            libshow.ShowDialog();
+        }
+
+        //--------------------------- -------------------------------------------------------
 
     }
 }
