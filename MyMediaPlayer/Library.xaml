@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Library" Height="321.339" Width="446.862">
     <Grid>
-        <DataGrid x:Name="dataGrid" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="219" Width="419" ItemsSource="{Binding ElementName=dataGrid}" />
+        <DataGrid x:Name="dataGrid"  AutoGenerateColumns="True" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="219" Width="419" ItemsSource="{Binding ElementName=dataGrid}" />
         <Button x:Name="button" Content="Hide" HorizontalAlignment="Left" Margin="118,0,0,13" VerticalAlignment="Bottom" Width="170" Height="33" Click="button_Click"/>
 
     </Grid>

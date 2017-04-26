@@ -141,8 +141,8 @@
                     </Grid.ColumnDefinitions>
 
 
-                    <ListView x:Name="lvFileView" Grid.ColumnSpan="3" Grid.Row="1" Grid.Column="0"/>
-                    <ListView x:Name="lvConvertView" Grid.ColumnSpan="4" Grid.Row="1" Grid.Column="4"/>
+                    <ListView x:Name="lvFileView" Grid.ColumnSpan="3" Grid.Row="1" Grid.Column="0" Initialized="isInt"/>
+                    <ListView x:Name="lvConvertView" Grid.ColumnSpan="4" Grid.Row="1" Grid.Column="4" SelectionChanged="lvConvertView_SelectionChanged"/>
                     <Button x:Name="btBrowseFolder" Content="Browse" HorizontalAlignment="Center" VerticalAlignment="Top" Width="106" Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2"/>
 
                     <CheckBox x:Name="cbOutputToSource" Content="Output files to source folder" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="3" Grid.Column="5"/>
