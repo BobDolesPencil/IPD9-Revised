@@ -76,6 +76,9 @@
     <Compile Include="database_firewall_rules.cs">
       <DependentUpon>MediaModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Library.xaml.cs">
+      <DependentUpon>Library.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LogCheck.cs" />
     <Compile Include="LogIn.xaml.cs">
       <DependentUpon>LogIn.xaml</DependentUpon>
@@ -88,11 +91,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MediaModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="MockODataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MockODataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="UploadSelection.cs" />
     <Compile Include="UserProfile.cs">
       <DependentUpon>MediaModel.tt</DependentUpon>
     </Compile>
     <Page Include="AddNewUser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Library.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -147,6 +159,17 @@
     </EntityDeploy>
     <None Include="MediaModel.edmx.diagram">
       <DependentUpon>MediaModel.edmx</DependentUpon>
+    </None>
+    <None Include="MockODataSet.xsc">
+      <DependentUpon>MockODataSet.xsd</DependentUpon>
+    </None>
+    <None Include="MockODataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>MockODataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="MockODataSet.xss">
+      <DependentUpon>MockODataSet.xsd</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
