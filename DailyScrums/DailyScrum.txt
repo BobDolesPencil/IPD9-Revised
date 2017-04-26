@@ -1,5 +1,58 @@
 Sebastien Scullion - Matthew Stinis
 
+Scrum 9 - 4/26/2017
+
+Seb
+  
+Will do in next 24h:
+1. Tree view
+2. Fix multi select
+3. Stream
+
+What was done in last 24h:
+
+1. Library MVVM
+2. Fix database connection
+
+Where I need help is:
+1. data binding
+
+
+Matt
+           
+Will do in next 24h:
+1. Create functional Theme Selector window  
+
+What was done in last 24h:
+
+1. Research on WPF and Theme implementation 
+
+Where I need help is:
+1. code-behind theory
+
+Scrum 8 - 4/25/2017
+
+Seb
+  
+Will do in next 24h:
+1. complete Library Datagrid
+2. context menu datagrid
+3. new images.
+
+Where I need help is:
+1. data binding
+
+
+Matt
+           
+Will do in next 24h:
+1. code-behind for audio converter  
+2. playlist function
+3. 
+
+Where I need help is:
+1. code-behind theory
+
 
 Scrum 7 - 4/24/2017
 
