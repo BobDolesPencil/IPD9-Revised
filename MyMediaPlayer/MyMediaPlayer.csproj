@@ -96,6 +96,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MockODataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="TreeMenu.cs" />
     <Compile Include="UploadSelection.cs" />
     <Compile Include="UserProfile.cs">
       <DependentUpon>MediaModel.tt</DependentUpon>
@@ -124,6 +125,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Themes\ExpressionDark.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MediaModel.Context.cs">

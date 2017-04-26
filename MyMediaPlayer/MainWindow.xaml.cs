@@ -1,7 +1,9 @@
 ﻿using Microsoft.Win32;
+using MyMediaPlayer.MockODataSetTableAdapters;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
@@ -34,12 +36,26 @@ namespace MyMediaPlayer
         private bool userIsDraggingSlider = false;
         LogIn log = new LogIn();
         public static LogCheck checklog = new LogCheck(false);
+        private Cursor Cursor;
         MockODataSet dataset = new MockODataSet();
+        //------ tree view class
+        public class DummyTreeViewItem : TreeViewItem
+        {
+            public DummyTreeViewItem()
+                : base()
+            {
+                base.Header = "Dummy";
+                base.Tag = "Dummy";
+            }
+        }
+        //------ tree view class END
 
 
         public MainWindow()
         {
             InitializeComponent();
+            FillDataGrid();
+            this.LoadDirectories();
             DispatcherTimer timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += timer_Tick;
@@ -130,7 +146,7 @@ namespace MyMediaPlayer
             AddNewUser Newsplash = new AddNewUser();
             Newsplash.ShowDialog();
         }
-
+        /*
         private void btnUpload_Click(object sender, RoutedEventArgs e)
         {
 
@@ -182,15 +198,11 @@ namespace MyMediaPlayer
 
 
             }
-           
 
+        }
+        */
 
-
-
-
-    }
-
-    private void btnBrowseMedia_Click(object sender, RoutedEventArgs e)
+        private void btnBrowseMedia_Click(object sender, RoutedEventArgs e)
         {
 
             OpenFileDialog open = new OpenFileDialog();
@@ -217,113 +229,261 @@ namespace MyMediaPlayer
 
         }
 
-        //----------------------------- TRYING MULTI UPLOAD -------------------------------------------------------------------------------
+        //  ----------------------------- TRYING MULTI UPLOAD -------------------------------------------------------------------------------
 
-        //private void btnUpload_Click(object sender, RoutedEventArgs e)
-        //{
-            //OpenFileDialog open = new OpenFileDialog();
-            //open.Multiselect = true;
-            //open.Filter = "Media files (*.mp3;*.mpg;*.mpeg)|*.mp3;*.mpg;*.mpeg|All files (*.*)|*.*";
+        private void btnUpload_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog open = new OpenFileDialog();
+            open.Multiselect = true;
+            open.Filter = "Media files (*.mp3;*.mpg;*.mpeg)|*.mp3;*.mpg;*.mpeg|All files (*.*)|*.*";
 
+            List<UploadSelection> uploadList = new List<UploadSelection>();//create class for list... check profiler
+            byte[] bytes;
 
+            if (open.ShowDialog() == true)
+            {
 
-            //List<UploadSelection> uploadList = new List<UploadSelection>();//create class for list... check profiler
-            //byte[] bytes;                                                              
+                if (checklog.Value == true)
+                {
 
+                foreach (string file in open.FileNames)
+                {
 
-
-
-            //if (open.ShowDialog() == true)
-
-
-
-            //    //if (checklog.Value == true)
-            //    //{
-
-            //    foreach (string file in open.FileNames)
-            //    {
-                    
-            //        string filename = open.FileName;
-            //        bytes = File.ReadAllBytes(filename);
-
-            //        uploadList.Add(new UploadSelection() { newfile = bytes, mediatype = "MP4", mediatitle = "newTest", userId = log.UserLogIn });
-            //    }
+                    string filename = open.FileName;
+                    bytes = File.ReadAllBytes(filename);
+                    uploadList.Add(new UploadSelection() { newfile = bytes, mediatype = "MP4", mediatitle = "newTest", userId = log.UserLogIn });
+                }
 
 
-
-            
-            //    using (var context = new MockOEntities())
-            //    {
-            //        if (open.ShowDialog() == true)
-            //        {
-
-            //            //try
-            //            //{
-
-
-
-            //                foreach (var entityToInsert in uploadList)
-            //                {
-            //                    var upload = new MediaFile();
-
-            //                    entityToInsert.userId = log.UserLogIn;
-            //                    entityToInsert.newfile = upload.sourceMedia;
-            //                    entityToInsert.mediatitle = upload.title;
-            //                    entityToInsert.mediatype = upload.mediaType;
-
-
-            //                    context.MediaFiles.Add(upload);
-            //                    }
-            //                    context.SaveChanges();
-
-                            
-            //                MessageBox.Show("File(s) Uploaded");
-                    //----------------------------------------------------------
-                        //}
-                        //catch (Exception ex)
-                        //{
-                        //    MessageBox.Show("error" + ex);
-                        //}
-
-
-
-                    //}
-                    //else
+                using (var context = new MockOEntities())
+                {
+                    //if (open.ShowDialog() == true)
                     //{
-                    //    MessageBox.Show("Please Log in");
-                    //    log.ShowDialog();
-                    //    checklog.Value = true;
+
+                        try
+                        {
+                            foreach (var entityToInsert in uploadList)
+                            {
+                                var upload = new MediaFile();
+
+                                upload.userId = log.UserLogIn;
+                                upload.sourceMedia = entityToInsert.newfile;
+                                upload.title = entityToInsert.mediatitle;
+                                upload.mediaType = entityToInsert.mediatype;
+                                context.MediaFiles.Add(upload);
+                            }
+                            context.SaveChanges();
+                            MessageBox.Show("File(s) Uploaded");
+
+                        }
+                        catch (DbEntityValidationException ex)
+                        {
+                            var err = ex.EntityValidationErrors;
+                            foreach (var eee in err)
+                            {
+                                Console.WriteLine("eee: " + eee);
+                            }
+                            MessageBox.Show("error" + ex + " : " + ex.EntityValidationErrors);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("error" + ex);
+                        }
+
+
+
                     //}
 
+                    
+                    }
+
+                } //--if logged in
+                else
+                {
+                    MessageBox.Show("Please Log in");
+                    log.ShowDialog();
+                    checklog.Value = true;
+                }
+            }//-- if show dialog = true
+        }
 
 
 
-        //        }
-        //    }
-        //}
 
         
 
-        private void Library_Click(object sender, RoutedEventArgs e)
+       
+
+
+
+
+        //------------------------------------------------------- tree -------------------------------------------------
+        public void LoadDirectories()
         {
-            Library libshow = new Library();
-            libshow.ShowDialog();
+            var drives = System.IO.DriveInfo.GetDrives();
+            foreach (var drive in drives)
+            {
+                lvFileView.Items.Add(GetItem(drive));
+            }
+        }
+        private TreeViewItem GetItem(DriveInfo drive)
+        {
+            var item = new TreeViewItem
+            {
+                Header = drive.Name,
+                DataContext = drive,
+                Tag = drive
+            };
+            this.AddDummy(item);
+            item.Expanded += new RoutedEventHandler(item_Expanded);
+            return item;
         }
 
-        private void lvConvertView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private TreeViewItem GetItem(DirectoryInfo directory)
         {
-            
+            var item = new TreeViewItem
+            {
+                Header = directory.Name,
+                DataContext = directory,
+                Tag = directory
+            };
+            this.AddDummy(item);
+            item.Expanded += new RoutedEventHandler(item_Expanded);
+            return item;
         }
 
-        private void isInt(object sender, EventArgs e)
+        private TreeViewItem GetItem(FileInfo file)
         {
-            //https://msdn.microsoft.com/en-us/library/ms171645(v=vs.110).aspx ---------------- 
+            var item = new TreeViewItem
+            {
+                Header = file.Name,
+                DataContext = file,
+                Tag = file
+            };
+            return item;
+        }
+        private void AddDummy(TreeViewItem item)
+        {
+            item.Items.Add(new DummyTreeViewItem());
         }
 
+        private bool HasDummy(TreeViewItem item)
+        {
+            return item.HasItems && (item.Items.OfType<TreeViewItem>().ToList().FindAll(tvi => tvi is DummyTreeViewItem).Count > 0);
+        }
+        private void ExploreDirectories(TreeViewItem item)
+        {
+            var directoryInfo = (DirectoryInfo)null;
+            if (item.Tag is DriveInfo)
+            {
+                directoryInfo = ((DriveInfo)item.Tag).RootDirectory;
+            }
+            else if (item.Tag is DirectoryInfo)
+            {
+                directoryInfo = (DirectoryInfo)item.Tag;
+            }
+            else if (item.Tag is FileInfo)
+            {
+                directoryInfo = ((FileInfo)item.Tag).Directory;
+            }
+            if (object.ReferenceEquals(directoryInfo, null)) return;
+            try
+            {
+                foreach (var directory in directoryInfo.GetDirectories())
+                {
+                    var isHidden = (directory.Attributes & FileAttributes.Hidden) == FileAttributes.Hidden;
+                    var isSystem = (directory.Attributes & FileAttributes.System) == FileAttributes.System;
+                    if (!isHidden && !isSystem)
+                    {
+                        item.Items.Add(this.GetItem(directory));
+                    }
+                }
+            }
+            catch (System.IO.IOException ex)
+            {
+                MessageBox.Show("The directory not found" + ex);
+            }
+
+        }
+
+        private void ExploreFiles(TreeViewItem item)
+        {
+            var directoryInfo = (DirectoryInfo)null;
+            if (item.Tag is DriveInfo)
+            {
+                directoryInfo = ((DriveInfo)item.Tag).RootDirectory;
+            }
+            else if (item.Tag is DirectoryInfo)
+            {
+                directoryInfo = (DirectoryInfo)item.Tag;
+            }
+            else if (item.Tag is FileInfo)
+            {
+                directoryInfo = ((FileInfo)item.Tag).Directory;
+            }
+            if (object.ReferenceEquals(directoryInfo, null)) return;
+
+            try
+            {
+                foreach (var file in directoryInfo.GetFiles())
+                {
+                    var isHidden = (file.Attributes & FileAttributes.Hidden) == FileAttributes.Hidden;
+                    var isSystem = (file.Attributes & FileAttributes.System) == FileAttributes.System;
+                    if (!isHidden && !isSystem)
+                    {
+                        item.Items.Add(this.GetItem(file));
+                    }
+                }
+            }
+            catch (IOException ex)
+            {
+                MessageBox.Show("Error: " + ex);
+            }
+
+        }
+
+        private void RemoveDummy(TreeViewItem item)
+        {
+            var dummies = item.Items.OfType<TreeViewItem>().ToList().FindAll(tvi => tvi is DummyTreeViewItem);
+            foreach (var dummy in dummies)
+            {
+                item.Items.Remove(dummy);
+            }
+        }
+
+        void item_Expanded(object sender, RoutedEventArgs e)
+        {
+            var item = (TreeViewItem)sender;
+            if (this.HasDummy(item))
+            {
+                this.Cursor = Cursors.Wait;
+                this.RemoveDummy(item);
+                this.ExploreDirectories(item);
+                this.ExploreFiles(item);
+                this.Cursor = Cursors.Arrow;
+            }
+        }
+        //------------------------------------------------------- tree -------------------------------------------------
+
+        private void FillDataGrid()
+        {
 
 
-        //--------------------------- -------------------------------------------------------
+
+            MediaFilesTableAdapter pd = new MediaFilesTableAdapter();
+            {
+
+                MyMediaPlayer.MockODataSet.MediaFilesDataTable dt = new MyMediaPlayer.MockODataSet.MediaFilesDataTable();
+                pd.Fill(dt);
+                dataGrid.ItemsSource = dt.DefaultView;
+            }
+        }
+
+        private void UplbtnUpload_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
 
     }
 }
-    
