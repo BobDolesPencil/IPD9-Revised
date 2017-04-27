@@ -84,6 +84,9 @@ namespace MyMediaPlayer
             openFileDialog.Filter = "Media files (*.mp3;*.mpg;*.mpeg)|*.mp3;*.mpg;*.mpeg|All files (*.*)|*.*";
             if (openFileDialog.ShowDialog() == true)
                 mePlayer.Source = new Uri(openFileDialog.FileName);
+            Player.Focus();
+            mePlayer.Play();
+            mediaPlayerIsPlaying = true;
         }
 
         private void Play_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -146,61 +149,7 @@ namespace MyMediaPlayer
             AddNewUser Newsplash = new AddNewUser();
             Newsplash.ShowDialog();
         }
-        /*
-        private void btnUpload_Click(object sender, RoutedEventArgs e)
-        {
-
-
-            OpenFileDialog open = new OpenFileDialog();
-            open.Multiselect = true;
-            open.Filter = "Media files (*.mp3;*.mpg;*.mpeg)|*.mp3;*.mpg;*.mpeg|All files (*.*)|*.*";
-
-            if (open.ShowDialog() == true)
-
-                tbFileName.Text = open.FileName;
-            string filename = tbFileName.Text.ToString();
-
-            byte[] bytes = File.ReadAllBytes(filename);
-
-            // if (LoggedIn != "")
-            if (checklog.Value == true)
-            {
-
-                using (var context = new MockOEntities())
-                {
-
-                    var upload = new MediaFile
-                    {
-
-
-                        userId = log.UserLogIn,
-                        sourceMedia = bytes,
-                        mediaType = "mp4"
-
-
-
-
-                    };
-
-
-                    context.MediaFiles.Add(upload);
-                    context.SaveChanges();
-                    MessageBox.Show("File Uploaded");
-
-                }
-            }
-            else
-            {
-                MessageBox.Show("Please Log in");
-
-                log.ShowDialog();
-                checklog.Value = true;
-
-
-            }
-
-        }
-        */
+        
 
         private void btnBrowseMedia_Click(object sender, RoutedEventArgs e)
         {
@@ -229,7 +178,7 @@ namespace MyMediaPlayer
 
         }
 
-        //  ----------------------------- TRYING MULTI UPLOAD -------------------------------------------------------------------------------
+        //------------------------------------------------------------- multiopen START
 
         private void btnUpload_Click(object sender, RoutedEventArgs e)
         {
@@ -257,8 +206,7 @@ namespace MyMediaPlayer
 
                 using (var context = new MockOEntities())
                 {
-                    //if (open.ShowDialog() == true)
-                    //{
+                    
 
                         try
                         {
@@ -273,7 +221,9 @@ namespace MyMediaPlayer
                                 context.MediaFiles.Add(upload);
                             }
                             context.SaveChanges();
+                            dataGrid.Items.Refresh();
                             MessageBox.Show("File(s) Uploaded");
+                            
 
                         }
                         catch (DbEntityValidationException ex)
@@ -309,7 +259,7 @@ namespace MyMediaPlayer
 
 
 
-
+        //------------------------------------------------------------- multiopen END
         
 
        
@@ -482,6 +432,56 @@ namespace MyMediaPlayer
         private void UplbtnUpload_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void PlayMenu_Click(object sender, RoutedEventArgs e)
+        {
+            //TreeViewItem selected = (TreeViewItem)lvFileView.SelectedItem;
+
+            string selected = GetSelectedPath();
+            
+            
+
+            if(File.Exists(selected))
+            {
+                try
+                {
+                    mePlayer.Source = new Uri(selected);
+                    
+                    Player.Focus();
+                    mePlayer.Play();
+                    mediaPlayerIsPlaying = true;
+                }
+                catch (UriFormatException ex)
+                {
+                    MessageBox.Show("There was an excaption: " + ex);
+                }
+            }
+            
+        }
+        private String GetSelectedPath()
+        {
+            var item = (TreeViewItem)lvFileView.SelectedItem;
+            if (item == null)
+            {
+                return null;
+            }
+
+            var driveInfo = item.Tag as DriveInfo;
+            if (driveInfo != null)
+            {
+                return (driveInfo).RootDirectory.FullName;
+            }
+
+            var directoryInfo = item.Tag as DirectoryInfo;
+            if (directoryInfo != null)
+            {
+                return (directoryInfo).FullName;
+            }
+
+            //return (directoryInfo).FullName;
+            //return (driveInfo).RootDirectory.FullName;
+            return null;
         }
 
 
