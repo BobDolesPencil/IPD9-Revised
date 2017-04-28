@@ -32,6 +32,7 @@ namespace MyMediaPlayer
 
     public partial class MainWindow : Window
     {
+       // public bool areyoulogged = false;
         private bool mediaPlayerIsPlaying = false;
         private bool userIsDraggingSlider = false;
         LogIn log = new LogIn();
@@ -186,7 +187,7 @@ namespace MyMediaPlayer
             open.Multiselect = true;
             open.Filter = "Media files (*.mp3;*.mpg;*.mpeg)|*.mp3;*.mpg;*.mpeg|All files (*.*)|*.*";
 
-            List<UploadSelection> uploadList = new List<UploadSelection>();//create class for list... check profiler
+            List<UploadSelection> uploadList = new List<UploadSelection>();//create class for list... check profiler---- og
             byte[] bytes;
 
             if (open.ShowDialog() == true)
@@ -195,29 +196,24 @@ namespace MyMediaPlayer
                 if (checklog.Value == true)
                 {
 
-                foreach (string file in open.FileNames)
-                {
-
-                    string filename = open.FileName;
-                    bytes = File.ReadAllBytes(filename);
-                    uploadList.Add(new UploadSelection() { newfile = bytes, mediatype = "MP4", mediatitle = "newTest", userId = log.UserLogIn });
-                }
 
 
-                using (var context = new MockOEntities())
+                    using (var context = new MockOEntities())
                 {
                     
 
                         try
                         {
-                            foreach (var entityToInsert in uploadList)
+                            foreach (var entityToInsert in open.FileNames)
                             {
                                 var upload = new MediaFile();
+                                bytes = File.ReadAllBytes(entityToInsert);
 
                                 upload.userId = log.UserLogIn;
-                                upload.sourceMedia = entityToInsert.newfile;
-                                upload.title = entityToInsert.mediatitle;
-                                upload.mediaType = entityToInsert.mediatype;
+                                upload.sourceMedia = bytes;
+                                upload.title = System.IO.Path.GetFileNameWithoutExtension(open.FileName) as string;
+                                upload.mediaType = System.IO.Path.GetExtension(open.FileName) as string;
+                                MessageBox.Show(upload.title.ToString()+"  -----------------  "+upload.mediaType.ToString());
                                 context.MediaFiles.Add(upload);
                             }
                             context.SaveChanges();
@@ -242,7 +238,7 @@ namespace MyMediaPlayer
 
 
 
-                    //}
+                    
 
                     
                     }
@@ -413,6 +409,7 @@ namespace MyMediaPlayer
                 this.Cursor = Cursors.Arrow;
             }
         }
+        
         //------------------------------------------------------- tree -------------------------------------------------
 
         private void FillDataGrid()
@@ -429,25 +426,37 @@ namespace MyMediaPlayer
             }
         }
 
-        private void UplbtnUpload_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+        
 
         private void PlayMenu_Click(object sender, RoutedEventArgs e)
         {
-            //TreeViewItem selected = (TreeViewItem)lvFileView.SelectedItem;
+            TreeViewItem selected = (TreeViewItem)lvFileView.SelectedItem;
+            MessageBox.Show("The Value of selected: " + selected);
 
-            string selected = GetSelectedPath();
-            
-            
+            //var selected = GetSelectedPath();
 
-            if(File.Exists(selected))
-            {
-                try
+            //var selecteduri = new Uri(selected.ToString());
+            //var uri = selecteduri.AbsolutePath;
+
+            //var selectedUri = selected.ToString();
+            //mePlayer.Source = new System.Uri(lvFileView.SelectedItem as string);
+
+            //if (File.Exists(selected.ToString()))
+            //{
+
+
+            try
                 {
-                    mePlayer.Source = new Uri(selected);
-                    
+                    var uri = new System.Uri(selected.ToString());
+                    Console.WriteLine("The Value of uri: " + uri);
+                Console.WriteLine("The Value of uri: " + uri.ToString());
+                Console.WriteLine("The Value of uri: " + uri.AbsoluteUri);
+                Console.WriteLine("The Value of uri: " + uri.AbsolutePath);
+
+                // var converted = uri.AbsolutePath;
+                //mePlayer.Source = new System.Uri(lvFileView.SelectedItem.ToString());
+                mePlayer.Source = uri;
+
                     Player.Focus();
                     mePlayer.Play();
                     mediaPlayerIsPlaying = true;
@@ -456,33 +465,33 @@ namespace MyMediaPlayer
                 {
                     MessageBox.Show("There was an excaption: " + ex);
                 }
-            }
-            
+           // }
+
         }
-        private String GetSelectedPath()
-        {
-            var item = (TreeViewItem)lvFileView.SelectedItem;
-            if (item == null)
-            {
-                return null;
-            }
+        //private String GetSelectedPath()
+        //{
+        //    var item = (TreeViewItem)lvFileView.SelectedItem;
+        //    if (item == null)
+        //    {
+        //        return null;
+        //    }
 
-            var driveInfo = item.Tag as DriveInfo;
-            if (driveInfo != null)
-            {
-                return (driveInfo).RootDirectory.FullName;
-            }
+        //    var driveInfo = item.Tag as DriveInfo;
+        //    if (driveInfo != null)
+        //    {
+        //        return (driveInfo).RootDirectory.FullName;
+        //    }
 
-            var directoryInfo = item.Tag as DirectoryInfo;
-            if (directoryInfo != null)
-            {
-                return (directoryInfo).FullName;
-            }
+        //    var directoryInfo = item.Tag as DirectoryInfo;
+        //    if (directoryInfo != null)
+        //    {
+        //        return (directoryInfo).FullName;
+        //    }
 
-            //return (directoryInfo).FullName;
-            //return (driveInfo).RootDirectory.FullName;
-            return null;
-        }
+        //    //return (directoryInfo).FullName;
+        //    //return (driveInfo).RootDirectory.FullName;
+        //    return null;
+        //}
 
 
     }
