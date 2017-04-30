@@ -17,21 +17,13 @@ using System.IO;
 
 namespace MyMediaPlayer
 {
-    
+
     class TreeView
     {
-
-
-        
-
-        
-        
-    
-
+        public TreeViewItem SelectedItem { get; internal set; }
+    }
 
 }
-
-    }
 
 
 

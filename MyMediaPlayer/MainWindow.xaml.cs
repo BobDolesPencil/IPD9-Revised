@@ -82,7 +82,7 @@ namespace MyMediaPlayer
         private void Open_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Media files (*.mp3;*.mpg;*.mpeg)|*.mp3;*.mpg;*.mpeg|All files (*.*)|*.*";
+            openFileDialog.Filter = "Media files (*.mp3;*.mpg;*.mpeg, *.mp4,*.avi, *.mkv)|*.mp3;*.mpg;*.mpeg, *.mp4,*.avi, *.mkv|All files (*.*)|*.*";
             if (openFileDialog.ShowDialog() == true)
                 mePlayer.Source = new Uri(openFileDialog.FileName);
             Player.Focus();
@@ -185,9 +185,9 @@ namespace MyMediaPlayer
         {
             OpenFileDialog open = new OpenFileDialog();
             open.Multiselect = true;
-            open.Filter = "Media files (*.mp3;*.mpg;*.mpeg)|*.mp3;*.mpg;*.mpeg|All files (*.*)|*.*";
+            open.Filter = "Media files (*.mp3; *.mpg; *.mpeg, *.mp4,*.avi, *.mkv)| *.mp3; *.mpg; *.mpeg, *.mp4,*.avi, *.mkv | All files(*.*) | *.* ";
 
-            List<UploadSelection> uploadList = new List<UploadSelection>();//create class for list... check profiler---- og
+            //List<UploadSelection> uploadList = new List<UploadSelection>();//create class for list... check profiler---- og
             byte[] bytes;
 
             if (open.ShowDialog() == true)
@@ -211,13 +211,13 @@ namespace MyMediaPlayer
 
                                 upload.userId = log.UserLogIn;
                                 upload.sourceMedia = bytes;
-                                upload.title = System.IO.Path.GetFileNameWithoutExtension(open.FileName) as string;
-                                upload.mediaType = System.IO.Path.GetExtension(open.FileName) as string;
+                                upload.title = System.IO.Path.GetFileNameWithoutExtension(open.FileName.ToString());
+                                upload.mediaType = System.IO.Path.GetExtension(open.FileName.ToString());
                                 MessageBox.Show(upload.title.ToString()+"  -----------------  "+upload.mediaType.ToString());
                                 context.MediaFiles.Add(upload);
                             }
                             context.SaveChanges();
-                            dataGrid.Items.Refresh();
+                            FillDataGrid();
                             MessageBox.Show("File(s) Uploaded");
                             
 
@@ -430,69 +430,170 @@ namespace MyMediaPlayer
 
         private void PlayMenu_Click(object sender, RoutedEventArgs e)
         {
-            TreeViewItem selected = (TreeViewItem)lvFileView.SelectedItem;
-            MessageBox.Show("The Value of selected: " + selected);
+        TreeViewItem temp = ((TreeViewItem)lvFileView.SelectedItem);
 
-            //var selected = GetSelectedPath();
+        if (temp == null)
 
-            //var selecteduri = new Uri(selected.ToString());
-            //var uri = selecteduri.AbsolutePath;
+        return;
 
-            //var selectedUri = selected.ToString();
-            //mePlayer.Source = new System.Uri(lvFileView.SelectedItem as string);
+        string path;
+        path = "";
+        string temp1 = "";
+        string temp2 = "";
 
-            //if (File.Exists(selected.ToString()))
-            //{
+            while (true)
+            {
+            temp1 = temp.Header.ToString();
 
+                if (temp1.Contains(@"\"))
+            {
+            temp2 = "";
+            }
+            path = temp1 + temp2 + path;
 
+                if (temp.Parent.GetType().ToString() == "System.Windows.Controls.TreeView")
+                    {
+                        break;
+                    }
+            temp = ((TreeViewItem)temp.Parent);
+            temp2 = @"\";
+            }
+            
+            
             try
-                {
-                    var uri = new System.Uri(selected.ToString());
-                    Console.WriteLine("The Value of uri: " + uri);
-                Console.WriteLine("The Value of uri: " + uri.ToString());
-                Console.WriteLine("The Value of uri: " + uri.AbsoluteUri);
-                Console.WriteLine("The Value of uri: " + uri.AbsolutePath);
+            {
+                var uri = new Uri(path);
 
-                // var converted = uri.AbsolutePath;
-                //mePlayer.Source = new System.Uri(lvFileView.SelectedItem.ToString());
+
+
                 mePlayer.Source = uri;
 
-                    Player.Focus();
-                    mePlayer.Play();
-                    mediaPlayerIsPlaying = true;
-                }
-                catch (UriFormatException ex)
-                {
-                    MessageBox.Show("There was an excaption: " + ex);
-                }
-           // }
+                Player.Focus();
+
+                mePlayer.Play();
+                mediaPlayerIsPlaying = true;
+            }
+            catch (UriFormatException ex)
+            {
+                MessageBox.Show("There was an excaption: " + ex);
+            }
+
 
         }
-        //private String GetSelectedPath()
-        //{
-        //    var item = (TreeViewItem)lvFileView.SelectedItem;
-        //    if (item == null)
-        //    {
-        //        return null;
-        //    }
-
-        //    var driveInfo = item.Tag as DriveInfo;
-        //    if (driveInfo != null)
-        //    {
-        //        return (driveInfo).RootDirectory.FullName;
-        //    }
-
-        //    var directoryInfo = item.Tag as DirectoryInfo;
-        //    if (directoryInfo != null)
-        //    {
-        //        return (directoryInfo).FullName;
-        //    }
-
-        //    //return (directoryInfo).FullName;
-        //    //return (driveInfo).RootDirectory.FullName;
-        //    return null;
-        //}
 
 
+
+
+        
+        private void LibraryView_GotFocus(object sender, RoutedEventArgs e)
+        {
+
+            FillDataGrid();
+
+        }
+       
+
+        private void PlayMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void EditMenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+           
+        }
+
+        private void ctxUpload_click(object sender, RoutedEventArgs e)
+        {
+            TreeViewItem temp = ((TreeViewItem)lvFileView.SelectedItem);
+
+            if (temp == null)
+
+                return;
+
+            string path;
+            path = "";
+            string temp1 = "";
+            string temp2 = "";
+
+            while (true)
+            {
+                temp1 = temp.Header.ToString();
+
+                if (temp1.Contains(@"\"))
+                {
+                    temp2 = "";
+                }
+                path = temp1 + temp2 + path;
+
+                if (temp.Parent.GetType().ToString() == "System.Windows.Controls.TreeView")
+                {
+                    break;
+                }
+                temp = ((TreeViewItem)temp.Parent);
+                temp2 = @"\";
+            }
+
+            byte[] bytes;
+
+                if (checklog.Value == true)
+                {
+
+
+
+                    using (var context = new MockOEntities())
+                    {
+
+
+                        try
+                        {
+                            
+                                var upload = new MediaFile();
+                                bytes = File.ReadAllBytes(path);
+
+                                upload.userId = log.UserLogIn;
+                                upload.sourceMedia = bytes;
+                                upload.title = System.IO.Path.GetFileNameWithoutExtension(path.ToString());
+                                upload.mediaType = System.IO.Path.GetExtension(path.ToString());
+                                
+                                context.MediaFiles.Add(upload);
+                            
+                            context.SaveChanges();
+                            FillDataGrid();
+                            MessageBox.Show("File(s) Uploaded");
+
+
+                        }
+                        catch (DbEntityValidationException ex)
+                        {
+                            var err = ex.EntityValidationErrors;
+                            foreach (var eee in err)
+                            {
+                                Console.WriteLine("eee: " + eee);
+                            }
+                            MessageBox.Show("error" + ex + " : " + ex.EntityValidationErrors);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("error" + ex);
+                        }
+
+
+
+
+
+
+                    }
+
+                } //--if logged in
+                else
+                {
+                    MessageBox.Show("Please Log in");
+                    log.ShowDialog();
+                    checklog.Value = true;
+                }
+            }//-- if show dialog = true
+
+        
     }
 }
