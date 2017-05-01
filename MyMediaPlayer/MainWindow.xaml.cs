@@ -152,16 +152,16 @@ namespace MyMediaPlayer
         }
         
 
-        private void btnBrowseMedia_Click(object sender, RoutedEventArgs e)
-        {
+        //private void btnBrowseMedia_Click(object sender, RoutedEventArgs e)
+        //{
 
-            OpenFileDialog open = new OpenFileDialog();
-            if (open.ShowDialog() == true)
-                tbFileName.Text = open.FileName;
+        //    OpenFileDialog open = new OpenFileDialog();
+        //    if (open.ShowDialog() == true)
+        //        tbFileName.Text = open.FileName;
 
 
 
-        }
+        //}
 
         private void LogIn_Click(object sender, RoutedEventArgs e)
         {
@@ -427,7 +427,7 @@ namespace MyMediaPlayer
         }
 
         
-
+        //------------------ context play listviw
         private void PlayMenu_Click(object sender, RoutedEventArgs e)
         {
         TreeViewItem temp = ((TreeViewItem)lvFileView.SelectedItem);
@@ -491,19 +491,21 @@ namespace MyMediaPlayer
             FillDataGrid();
 
         }
-       
 
-        private void PlayMenuItem_Click(object sender, RoutedEventArgs e)
-        {
 
-        }
+        //private void PlayMenuItem_Click(object sender, RoutedEventArgs e)
+        //{
 
-        private void EditMenuItem_Click_1(object sender, RoutedEventArgs e)
-        {
-           
-        }
+        //    using (var context = new MockOEntities())
+        //    {
+        //        var load = DataGrid.
 
-        private void ctxUpload_click(object sender, RoutedEventArgs e)
+        //    }
+        //}
+
+
+        //------------------ context upload listviw
+        private void Upload_click(object sender, RoutedEventArgs e)
         {
             TreeViewItem temp = ((TreeViewItem)lvFileView.SelectedItem);
 
