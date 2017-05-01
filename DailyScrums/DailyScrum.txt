@@ -1,5 +1,33 @@
 Sebastien Scullion - Matthew Stinis
 
+Scrum 10 - 4/27/2017
+
+Seb
+  
+Will do in next 24h:
+1. MIME 
+2. Context Menu database
+3. Context menu local drive
+
+What was done in last 24h:
+
+1. dynamic themes
+2. 
+
+Matt
+           
+Will do in next 24h:
+1. Dynamic themes  
+2. Add menu options
+
+What was done in last 24h:
+
+1. added single theme
+ 
+
+Where I need help is:
+1. code-behind understanding 
+
 Scrum 9 - 4/26/2017
 
 Seb
