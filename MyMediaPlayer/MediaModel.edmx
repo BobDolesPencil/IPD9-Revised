@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="MockOModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="MockOModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="MediaFiles">
           <Key>
             <PropertyRef Name="mediaID" />
@@ -13,6 +13,7 @@
           <Property Name="sourceMedia" Type="varbinary(max)" Nullable="false" />
           <Property Name="mediaType" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="userId" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="UserProfile">
           <Key>
@@ -41,18 +42,6 @@ warning 6002: The table/view 'MockO.sys.database_firewall_rules' does not have a
           <Property Name="create_date" Type="datetime" Nullable="false" />
           <Property Name="modify_date" Type="datetime" Nullable="false" />
         </EntityType>
-        <Association Name="fk_userId">
-          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
-          <End Role="MediaFiles" Type="Self.MediaFiles" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserProfile">
-              <PropertyRef Name="userId" />
-            </Principal>
-            <Dependent Role="MediaFiles">
-              <PropertyRef Name="userId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="MockOModelStoreContainer">
           <EntitySet Name="MediaFiles" EntityType="Self.MediaFiles" Schema="Libraries" store:Type="Tables" />
           <EntitySet Name="UserProfile" EntityType="Self.UserProfile" Schema="Users" store:Type="Tables" />
@@ -66,13 +55,8 @@ warning 6002: The table/view 'MockO.sys.database_firewall_rules' does not have a
     [database_firewall_rules].[modify_date] AS [modify_date]
     FROM [sys].[database_firewall_rules] AS [database_firewall_rules]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="fk_userId" Association="Self.fk_userId">
-            <End Role="UserProfile" EntitySet="UserProfile" />
-            <End Role="MediaFiles" EntitySet="MediaFiles" />
-          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MockOModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -85,6 +69,7 @@ warning 6002: The table/view 'MockO.sys.database_firewall_rules' does not have a
           <Property Name="mediaType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="userId" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="UserProfile" Relationship="Self.fk_userId" FromRole="MediaFiles" ToRole="UserProfile" />
+          <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="UserProfile">
           <Key>
@@ -142,6 +127,7 @@ warning 6002: The table/view 'MockO.sys.database_firewall_rules' does not have a
           <EntitySetMapping Name="MediaFiles">
             <EntityTypeMapping TypeName="MockOModel.MediaFile">
               <MappingFragment StoreEntitySet="MediaFiles">
+                <ScalarProperty Name="title" ColumnName="title" />
                 <ScalarProperty Name="mediaID" ColumnName="mediaID" />
                 <ScalarProperty Name="sourceMedia" ColumnName="sourceMedia" />
                 <ScalarProperty Name="mediaType" ColumnName="mediaType" />
@@ -185,7 +171,7 @@ warning 6002: The table/view 'MockO.sys.database_firewall_rules' does not have a
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />

@@ -32,6 +32,7 @@ namespace MyMediaPlayer
 
     public partial class MainWindow : Window
     {
+       // public bool areyoulogged = false;
         private bool mediaPlayerIsPlaying = false;
         private bool userIsDraggingSlider = false;
         LogIn log = new LogIn();
@@ -81,9 +82,12 @@ namespace MyMediaPlayer
         private void Open_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Media files (*.mp3;*.mpg;*.mpeg)|*.mp3;*.mpg;*.mpeg|All files (*.*)|*.*";
+            openFileDialog.Filter = "Media files (*.mp3;*.mpg;*.mpeg, *.mp4,*.avi, *.mkv)|*.mp3;*.mpg;*.mpeg, *.mp4,*.avi, *.mkv|All files (*.*)|*.*";
             if (openFileDialog.ShowDialog() == true)
                 mePlayer.Source = new Uri(openFileDialog.FileName);
+            Player.Focus();
+            mePlayer.Play();
+            mediaPlayerIsPlaying = true;
         }
 
         private void Play_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -146,72 +150,18 @@ namespace MyMediaPlayer
             AddNewUser Newsplash = new AddNewUser();
             Newsplash.ShowDialog();
         }
-        /*
-        private void btnUpload_Click(object sender, RoutedEventArgs e)
-        {
+        
 
+        //private void btnBrowseMedia_Click(object sender, RoutedEventArgs e)
+        //{
 
-            OpenFileDialog open = new OpenFileDialog();
-            open.Multiselect = true;
-            open.Filter = "Media files (*.mp3;*.mpg;*.mpeg)|*.mp3;*.mpg;*.mpeg|All files (*.*)|*.*";
-
-            if (open.ShowDialog() == true)
-
-                tbFileName.Text = open.FileName;
-            string filename = tbFileName.Text.ToString();
-
-            byte[] bytes = File.ReadAllBytes(filename);
-
-            // if (LoggedIn != "")
-            if (checklog.Value == true)
-            {
-
-                using (var context = new MockOEntities())
-                {
-
-                    var upload = new MediaFile
-                    {
-
-
-                        userId = log.UserLogIn,
-                        sourceMedia = bytes,
-                        mediaType = "mp4"
+        //    OpenFileDialog open = new OpenFileDialog();
+        //    if (open.ShowDialog() == true)
+        //        tbFileName.Text = open.FileName;
 
 
 
-
-                    };
-
-
-                    context.MediaFiles.Add(upload);
-                    context.SaveChanges();
-                    MessageBox.Show("File Uploaded");
-
-                }
-            }
-            else
-            {
-                MessageBox.Show("Please Log in");
-
-                log.ShowDialog();
-                checklog.Value = true;
-
-
-            }
-
-        }
-        */
-
-        private void btnBrowseMedia_Click(object sender, RoutedEventArgs e)
-        {
-
-            OpenFileDialog open = new OpenFileDialog();
-            if (open.ShowDialog() == true)
-                tbFileName.Text = open.FileName;
-
-
-
-        }
+        //}
 
         private void LogIn_Click(object sender, RoutedEventArgs e)
         {
@@ -229,15 +179,15 @@ namespace MyMediaPlayer
 
         }
 
-        //  ----------------------------- TRYING MULTI UPLOAD -------------------------------------------------------------------------------
+        //------------------------------------------------------------- multiopen START
 
         private void btnUpload_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog open = new OpenFileDialog();
             open.Multiselect = true;
-            open.Filter = "Media files (*.mp3;*.mpg;*.mpeg)|*.mp3;*.mpg;*.mpeg|All files (*.*)|*.*";
+            open.Filter = "Media files (*.mp3; *.mpg; *.mpeg, *.mp4,*.avi, *.mkv)| *.mp3; *.mpg; *.mpeg, *.mp4,*.avi, *.mkv | All files(*.*) | *.* ";
 
-            List<UploadSelection> uploadList = new List<UploadSelection>();//create class for list... check profiler
+            //List<UploadSelection> uploadList = new List<UploadSelection>();//create class for list... check profiler---- og
             byte[] bytes;
 
             if (open.ShowDialog() == true)
@@ -246,34 +196,30 @@ namespace MyMediaPlayer
                 if (checklog.Value == true)
                 {
 
-                foreach (string file in open.FileNames)
+
+
+                    using (var context = new MockOEntities())
                 {
-
-                    string filename = open.FileName;
-                    bytes = File.ReadAllBytes(filename);
-                    uploadList.Add(new UploadSelection() { newfile = bytes, mediatype = "MP4", mediatitle = "newTest", userId = log.UserLogIn });
-                }
-
-
-                using (var context = new MockOEntities())
-                {
-                    //if (open.ShowDialog() == true)
-                    //{
+                    
 
                         try
                         {
-                            foreach (var entityToInsert in uploadList)
+                            foreach (var entityToInsert in open.FileNames)
                             {
                                 var upload = new MediaFile();
+                                bytes = File.ReadAllBytes(entityToInsert);
 
                                 upload.userId = log.UserLogIn;
-                                upload.sourceMedia = entityToInsert.newfile;
-                                upload.title = entityToInsert.mediatitle;
-                                upload.mediaType = entityToInsert.mediatype;
+                                upload.sourceMedia = bytes;
+                                upload.title = System.IO.Path.GetFileNameWithoutExtension(open.FileName.ToString());
+                                upload.mediaType = System.IO.Path.GetExtension(open.FileName.ToString());
+                                MessageBox.Show(upload.title.ToString()+"  -----------------  "+upload.mediaType.ToString());
                                 context.MediaFiles.Add(upload);
                             }
                             context.SaveChanges();
+                            FillDataGrid();
                             MessageBox.Show("File(s) Uploaded");
+                            
 
                         }
                         catch (DbEntityValidationException ex)
@@ -292,7 +238,7 @@ namespace MyMediaPlayer
 
 
 
-                    //}
+                    
 
                     
                     }
@@ -309,7 +255,7 @@ namespace MyMediaPlayer
 
 
 
-
+        //------------------------------------------------------------- multiopen END
         
 
        
@@ -463,6 +409,7 @@ namespace MyMediaPlayer
                 this.Cursor = Cursors.Arrow;
             }
         }
+        
         //------------------------------------------------------- tree -------------------------------------------------
 
         private void FillDataGrid()
@@ -479,11 +426,176 @@ namespace MyMediaPlayer
             }
         }
 
-        private void UplbtnUpload_Click(object sender, RoutedEventArgs e)
+        
+        //------------------ context play listviw
+        private void PlayMenu_Click(object sender, RoutedEventArgs e)
         {
+        TreeViewItem temp = ((TreeViewItem)lvFileView.SelectedItem);
+
+        if (temp == null)
+
+        return;
+
+        string path;
+        path = "";
+        string temp1 = "";
+        string temp2 = "";
+
+            while (true)
+            {
+            temp1 = temp.Header.ToString();
+
+                if (temp1.Contains(@"\"))
+            {
+            temp2 = "";
+            }
+            path = temp1 + temp2 + path;
+
+                if (temp.Parent.GetType().ToString() == "System.Windows.Controls.TreeView")
+                    {
+                        break;
+                    }
+            temp = ((TreeViewItem)temp.Parent);
+            temp2 = @"\";
+            }
+            
+            
+            try
+            {
+                var uri = new Uri(path);
+
+
+
+                mePlayer.Source = uri;
+
+                Player.Focus();
+
+                mePlayer.Play();
+                mediaPlayerIsPlaying = true;
+            }
+            catch (UriFormatException ex)
+            {
+                MessageBox.Show("There was an excaption: " + ex);
+            }
+
 
         }
 
 
+
+
+        
+        private void LibraryView_GotFocus(object sender, RoutedEventArgs e)
+        {
+
+            FillDataGrid();
+
+        }
+
+
+        //private void PlayMenuItem_Click(object sender, RoutedEventArgs e)
+        //{
+
+        //    using (var context = new MockOEntities())
+        //    {
+        //        var load = DataGrid.
+
+        //    }
+        //}
+
+
+        //------------------ context upload listviw
+        private void Upload_click(object sender, RoutedEventArgs e)
+        {
+            TreeViewItem temp = ((TreeViewItem)lvFileView.SelectedItem);
+
+            if (temp == null)
+
+                return;
+
+            string path;
+            path = "";
+            string temp1 = "";
+            string temp2 = "";
+
+            while (true)
+            {
+                temp1 = temp.Header.ToString();
+
+                if (temp1.Contains(@"\"))
+                {
+                    temp2 = "";
+                }
+                path = temp1 + temp2 + path;
+
+                if (temp.Parent.GetType().ToString() == "System.Windows.Controls.TreeView")
+                {
+                    break;
+                }
+                temp = ((TreeViewItem)temp.Parent);
+                temp2 = @"\";
+            }
+
+            byte[] bytes;
+
+                if (checklog.Value == true)
+                {
+
+
+
+                    using (var context = new MockOEntities())
+                    {
+
+
+                        try
+                        {
+                            
+                                var upload = new MediaFile();
+                                bytes = File.ReadAllBytes(path);
+
+                                upload.userId = log.UserLogIn;
+                                upload.sourceMedia = bytes;
+                                upload.title = System.IO.Path.GetFileNameWithoutExtension(path.ToString());
+                                upload.mediaType = System.IO.Path.GetExtension(path.ToString());
+                                
+                                context.MediaFiles.Add(upload);
+                            
+                            context.SaveChanges();
+                            FillDataGrid();
+                            MessageBox.Show("File(s) Uploaded");
+
+
+                        }
+                        catch (DbEntityValidationException ex)
+                        {
+                            var err = ex.EntityValidationErrors;
+                            foreach (var eee in err)
+                            {
+                                Console.WriteLine("eee: " + eee);
+                            }
+                            MessageBox.Show("error" + ex + " : " + ex.EntityValidationErrors);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("error" + ex);
+                        }
+
+
+
+
+
+
+                    }
+
+                } //--if logged in
+                else
+                {
+                    MessageBox.Show("Please Log in");
+                    log.ShowDialog();
+                    checklog.Value = true;
+                }
+            }//-- if show dialog = true
+
+        
     }
 }

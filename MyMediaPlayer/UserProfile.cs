@@ -24,7 +24,6 @@ namespace MyMediaPlayer
         public string FirstName { get; set; }
         public string LastNAme { get; set; }
         public string pass { get; set; }
-        
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MediaFile> MediaFiles { get; set; }

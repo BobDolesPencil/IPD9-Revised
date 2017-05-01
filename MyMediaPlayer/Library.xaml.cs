@@ -56,7 +56,7 @@ namespace MyMediaPlayer
                 MyMediaPlayer.MockODataSet.MediaFilesDataTable dt = new MyMediaPlayer.MockODataSet.MediaFilesDataTable();
                 pd.Fill(dt);
                 dataGrid.ItemsSource = dt.DefaultView;
-                dataGrid.Items.Refresh();
+                
             }
         }
     }

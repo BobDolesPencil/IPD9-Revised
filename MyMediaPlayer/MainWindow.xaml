@@ -48,7 +48,6 @@
         <Button Grid.Column="3" Grid.Row="2" HorizontalAlignment="Center" MinWidth="50" Margin="3" Command="MediaCommands.Stop" Content="Stop">
             <!--<Image Source="images\stop.png" />-->
         </Button>
-        <Button Grid.Column="4" Grid.Row="2" HorizontalAlignment="Center" MinWidth="50" Margin="3" />
         <Button Grid.Column="5" Grid.Row="2" HorizontalAlignment="Center" MinWidth="50" Margin="3" Content="Upload" Click="btnUpload_Click"   />
 
         <TabControl Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="7" TabStripPlacement="Left">
@@ -87,19 +86,8 @@
                     </StatusBar>
                 </Grid>
             </TabItem>
-            <TabItem Header="Other" Name="Other">
-                <StackPanel>
-                    <TextBlock>Upload a File</TextBlock>
 
-                    <Button x:Name="btnBrowseMedia" Content="Browse" Click="btnBrowseMedia_Click" />
-                    <TextBlock x:Name="tbFileName" Text="..." />
-                    <Button x:Name="btnUpload" Content="Upload" Click="btnUpload_Click"/>
-                    <!--Click="btnUpload_Click"-->
-
-                </StackPanel>
-            </TabItem>
-
-            <TabItem Header="Library" Name="LibraryView">
+            <TabItem Header="Library" Name="LibraryView" GotFocus="LibraryView_GotFocus">
                 <Grid Name="GridConvert">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="40" />
@@ -124,14 +112,23 @@
 
                     <TreeView x:Name="lvFileView" Grid.ColumnSpan="3" Grid.Row="1" Grid.Column="0" Grid.RowSpan="4" Margin="0,5,0,0" >
                         <TreeView.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Header="Play" />
+                            <ContextMenu Name="ContextMenu">
+                                <MenuItem Header="Play" Click="PlayMenu_Click"  />
+                                <MenuItem Header="Upload" Click="Upload_click" />
                             </ContextMenu>
                             
                             
                         </TreeView.ContextMenu>
                     </TreeView>
-                    <DataGrid x:Name="dataGrid"  Grid.ColumnSpan="4" Grid.Row="1" Grid.Column="4" Grid.RowSpan="4"  AutoGenerateColumns="True" HorizontalAlignment="Left" VerticalAlignment="Top"  ItemsSource="{Binding ElementName=dataGrid}" Height="222" Width="330" Margin="10,0,-27,0" Background="#FF595959"/>
+                    <DataGrid x:Name="dataGrid"  GridLinesVisibility="None" Grid.ColumnSpan="4" Grid.Row="1" Grid.Column="4" Grid.RowSpan="4"  AutoGenerateColumns="True" HorizontalAlignment="Left" VerticalAlignment="Top"  ItemsSource="{Binding ElementName=dataGrid}" Height="222" Width="330" Margin="10,0,-27,0" Background="#FF595959">
+                        <DataGrid.ContextMenu>
+                            <ContextMenu Name="DataGridMenu">
+                                <MenuItem Header="Play" />
+                                <MenuItem Header="Edit"  />
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
+                     </DataGrid>
+
                     <Label Content="Local Files" HorizontalAlignment="Left" Margin="0,5,0,0" VerticalAlignment="Top" Height="25" Width="91"/>
                     <Label Content="Database Files" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Width="95" Grid.ColumnSpan="2" Grid.Column="4" Margin="0,5,0,0"/>
 
